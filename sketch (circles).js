@@ -4,7 +4,7 @@ let level = 0;
 
 function setup() {
   createCanvas(600, 400);
-  for (let i = 0; i < 15; i++) {
+  for (let i = 0; i < 20; i++) {
     let x = random(width);
     let y = random(height);
     let r = 40;
@@ -82,14 +82,14 @@ function level1() {
 
 function level2() {
   level = 2;
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 10; i++) {
     bubbles[i].appear(); 
   }
 }
 
 function level3() {
   level = 3;
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 20; i++) {
     bubbles[i].appear(); 
   }
 }
@@ -114,7 +114,7 @@ class Bubble {
         level++;
         score = 0;
       }
-      if ((level == 2) && (score == 10)) {
+      if ((level == 2) && (score == 5)) {
         level++;
         score = 0;
       }
@@ -125,6 +125,6 @@ class Bubble {
     stroke(255);
     strokeWeight(4)
     fill(this.col, 60);
-    ellipse(this.x, this.y, this.r * 2);
+    ellipse(this.x, this.y, this.r);
   }
 }
