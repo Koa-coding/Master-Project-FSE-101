@@ -1,6 +1,13 @@
 let bubbles = [];
 let score = 0;
 let level = 0;
+var song;
+var check;
+
+function preload() {
+  song = loadSound("New Home (Slowed).mp3");
+  check = loadSound("check mark sound effect.mp3");
+}
 
 function setup() {
   createCanvas(600, 400);
@@ -10,12 +17,14 @@ function setup() {
     let r = 40;
     let b = new Bubble(x, y, r);
     bubbles.push(b);
+    song.play();
   }
 }
 
 function mousePressed() {
   for (let i = 0; i < bubbles.length; i++) {
     bubbles[i].clicked(mouseX, mouseY);
+    bubbles[i].correct(mouseX, mouseY);
   }
 }
 
@@ -118,6 +127,13 @@ class Bubble {
         level++;
         score = 0;
       }
+    }
+  }
+  
+  correct(px, py) {
+    let d = dist(px, py, this.x, this.y);
+    if (d < this.r) {
+      check.play();
     }
   }
 
