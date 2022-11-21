@@ -1,0 +1,30 @@
+function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  background(220);
+  fill('black');
+  rect(0,180,10,10);
+  fill('black');
+  rect(390,180,10,10);
+  fill('white');
+  circle(50,50,250);
+  circle(200,50,250);
+  circle(350,50,250);
+  circle(50,320,250);
+  circle(200,320,250);
+  circle(350,320,250);
+ 
+  if (mouseIsPressed) {
+    ellipse(mouseX,mouseY,5,5);
+  }
+  if (dist(50,50,mouseX,mouseY) < 125 ||dist(200,50,mouseX,mouseY) < 125|| dist(350,50,mouseX,mouseY) < 125 || dist(50,320,mouseX,mouseY) < 125 || dist(200,320,mouseX,mouseY) < 125 || dist(350,320,mouseX,mouseY) < 125) {
+    fill('black');
+    text('Looks like you traced outside of the lines!',10,30);
+  }
+  else {
+    fill('black');
+    text('Nicely done! Onto the next level.',10,30);
+  }
+}
