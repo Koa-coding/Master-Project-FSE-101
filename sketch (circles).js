@@ -5,7 +5,7 @@ var song;
 var check;
 
 function preload() {
-  song = loadSound("New Home (Slowed).mp3");
+  song = loadSound("Wet Hands.mp3");
   check = loadSound("check mark sound effect.mp3");
 }
 
@@ -18,6 +18,7 @@ function setup() {
     let b = new Bubble(x, y, r);
     bubbles.push(b);
     song.play();
+    check.setVolume(0.1);
   }
 }
 
