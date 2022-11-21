@@ -1,0 +1,212 @@
+let page = 0;
+let img;
+// circle
+var song;
+var check;
+let bubbles = [];
+let score = 0;
+let level = 1;
+//
+
+
+class Bubble {
+  constructor(x, y, r) {
+    this.x = x;
+    this.y = y;
+    this.r = r;
+    this.col = color(255,0,100);
+  }
+
+  clicked(px, py) {
+    let d = dist(px, py, this.x, this.y);
+    if (d < this.r) {
+      score++;
+      this.col = color(0,0,0,0);
+      strokeWeight(4)
+      stroke(0)
+      if ((level == 1) && (score == 5)) {
+        level++;
+        score = 0;
+      }
+      if ((level == 2) && (score == 5)) {
+        level++;
+        score = 0;
+      }
+    }
+  }
+  
+  correct(px, py) {
+    let d = dist(px, py, this.x, this.y);
+    if (d < this.r) {
+      check.play();
+    }
+  }
+
+  appear() {
+    stroke(255);
+    strokeWeight(4)
+    fill(this.col, 60);
+    ellipse(this.x, this.y, this.r);
+  }
+} 
+
+
+function preload() {
+  img = loadImage('croc frog.jpg');
+  song = loadSound("Wet Hands.mp3");
+  check = loadSound("check mark sound effect.mp3");
+}
+
+function setup() {
+  createCanvas(600, 400);
+  
+  // circle
+  for (let i = 0; i < 20; i++) {
+        let x = random(width);
+        let y = random(height);
+        let r = 40;
+        let b = new Bubble(x, y, r);
+        bubbles.push(b);
+  }
+  //
+}
+
+function draw() {
+  background(220);
+  fill(0, 255, 0);
+  rect(50, 50, 200, 75);
+  fill(255, 0, 255);
+  rect(50, 150, 200, 75);
+  fill(255, 0, 0);
+  rect(50, 250, 200, 75);
+  textSize(50)
+  fill(255);
+  text('START', 70, 106);
+  text('EXIT', 94, 300);
+  textSize(26);
+  text('INSTRUCTIONS', 52, 200);
+  image(img, 275, 100, 300, 200);
+  
+  if (page == 1){
+    background(220);
+    fill('pink');
+    rect(50, 50, 200, 75);
+    fill('blue');
+    rect(50, 150, 200, 75);
+    fill(255, 0, 0);
+    rect(50, 250, 200, 75);
+    textSize(50)
+    fill(255);
+    text('circles', 70, 106);
+    text('trace', 80, 200);
+    text('pingpong', 50, 300);
+    fill(0)
+    textSize(20)
+    text('Right Click to return to MENU', 250, 30)
+    if (mouseButton == RIGHT) {
+      page = 0;
+    }
+  }
+  
+  if (page == 2) {
+    background(255, 0, 255)
+    textSize(20)
+    text('Right Click to return to MENU', 250, 30)
+    textSize(20)
+    text('There are 3 games that you can play', 50, 150)
+    text('game 1 is pressing circles and you earn points', 50, 200)
+    text('game 2 is trace where you trace your mouse with the line', 50, 240)
+    text('game 3 is card flip where you have to match cards together', 50, 290)
+    if (mouseButton == RIGHT) {
+      page = 0
+    }
+  }
+  
+  if (page == 3) {
+    background(255, 0, 0)
+    textSize(50)
+    text('COME AGAIN SOON!', 40, height / 2)
+  }
+  
+  if (page == 4) {
+    background(0);
+    noStroke()
+    fill('orange');
+    text("Score: " + score, 10, 40);
+    text("Level: " +level, 10, 70)
+    textSize(25);
+    song.play();
+    check.setVolume(0.1);
+    
+    if (level == 1){
+      level1();  
+    }
+  
+    if (level == 2){
+      level2();
+    }
+  
+    if (level == 3){
+      level3();
+    }
+  }
+}
+
+function mouseClicked() {
+  if (page == 0) {
+    if (mouseX < 200 && mouseX > 50) {
+      if (mouseY < 125 && mouseY > 50) {
+        page = 1
+      }
+      if (mouseY < 225 && mouseY > 150) {
+        page = 2
+      }
+      if (mouseY < 325 && mouseY > 250) {
+        page = 3
+      }
+    }
+  }
+  if (page == 1) {
+    if (mouseX < 200 && mouseX > 50) {
+      if (mouseY < 125 && mouseY > 50) {
+        page = 4
+      }
+      if (mouseY < 225 && mouseY > 150) {
+        page = 2
+      }
+      if (mouseY < 325 && mouseY > 250) {
+        page = 3
+      }
+    }
+  }
+}
+
+
+//////////////////////////////////////////////////////////////
+    
+function mousePressed() {
+  for (let i = 0; i < bubbles.length; i++) {
+    bubbles[i].clicked(mouseX, mouseY);
+    bubbles[i].correct(mouseX, mouseY);
+  }
+}
+
+function level1() {
+  for (let i = 0; i < 5; i++) {
+    bubbles[i].appear(); 
+  }
+}
+
+function level2() {
+  level = 2;
+  for (let i = 0; i < 10; i++) {
+    bubbles[i].appear(); 
+  }
+}
+
+function level3() {
+  level = 3;
+  for (let i = 0; i < 20; i++) {
+    bubbles[i].appear(); 
+  }
+}
