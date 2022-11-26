@@ -6,9 +6,9 @@ var check;
 let bubbles = [];
 let score = 0;
 let level = 1;
-//
 
 
+///////////////////////// circles
 class Bubble {
   constructor(x, y, r) {
     this.x = x;
@@ -49,11 +49,11 @@ class Bubble {
     ellipse(this.x, this.y, this.r);
   }
 } 
-
+//////////////////////////////////////////
 
 function preload() {
   img = loadImage('croc frog.jpg');
-  song = loadSound("Wet Hands.mp3");
+  //song = loadSound("");
   check = loadSound("check mark sound effect.mp3");
 }
 
@@ -68,7 +68,6 @@ function setup() {
         let b = new Bubble(x, y, r);
         bubbles.push(b);
   }
-  //
 }
 
 function draw() {
@@ -87,19 +86,23 @@ function draw() {
   text('INSTRUCTIONS', 52, 200);
   image(img, 275, 100, 300, 200);
   
+  if (page == 0) {
+    song.pause();
+  }
+  
   if (page == 1){
     background(220);
     fill('pink');
-    rect(50, 50, 200, 75);
+    rect(250, 50, 200, 75);
     fill('blue');
-    rect(50, 150, 200, 75);
+    rect(250, 150, 200, 75);
     fill(255, 0, 0);
-    rect(50, 250, 200, 75);
+    rect(250, 250, 200, 75);
     textSize(50)
     fill(255);
-    text('circles', 70, 106);
-    text('trace', 80, 200);
-    text('pingpong', 50, 300);
+    text('circles', 270, 106);
+    text('trace', 280, 200);
+    text('pingpong', 250, 300);
     fill(0)
     textSize(20)
     text('Right Click to return to MENU', 250, 30)
@@ -137,6 +140,13 @@ function draw() {
     textSize(25);
     song.play();
     check.setVolume(0.1);
+    song.setVolume(0.2);
+    textSize(20)
+    fill('white')
+    text('Right Click to return to MENU', 200, 60)
+    if (mouseButton == RIGHT) {
+      page = 0;
+    }
     
     if (level == 1){
       level1();  
@@ -150,7 +160,43 @@ function draw() {
       level3();
     }
   }
+  
+  if (page == 5) {
+    background(220);
+    fill('black');
+    rect(0,180,10,10);
+    fill('black');
+    rect(390,180,10,10);
+    fill('white');
+    circle(50,50,250);
+    circle(200,50,250);
+    circle(350,50,250);
+    circle(50,320,250);
+    circle(200,320,250);
+    circle(350,320,250);
+    textSize(20)
+    fill('black')
+    text('Right Click to return to MENU', 200, 60)
+    if (mouseButton == RIGHT) {
+      page = 0;
+    }
+    
+    if (mouseIsPressed) {
+    ellipse(mouseX,mouseY,5,5);
+  }
+  if (dist(50,50,mouseX,mouseY) < 125 ||dist(200,50,mouseX,mouseY) < 125|| dist(350,50,mouseX,mouseY) < 125 || dist(50,320,mouseX,mouseY) < 125 || dist(200,320,mouseX,mouseY) < 125 || dist(350,320,mouseX,mouseY) < 125) {
+    fill('black');
+    strokeWeight(2)
+    text('Looks like you traced outside of the lines!',10,30);
+  }
+  else {
+    fill('black');
+    strokeWeight(2)
+    text('Nicely done! Onto the next level.',10,30);
+  }
+  }
 }
+
 
 function mouseClicked() {
   if (page == 0) {
@@ -167,12 +213,12 @@ function mouseClicked() {
     }
   }
   if (page == 1) {
-    if (mouseX < 200 && mouseX > 50) {
+    if (mouseX < 400 && mouseX > 250) {
       if (mouseY < 125 && mouseY > 50) {
         page = 4
       }
       if (mouseY < 225 && mouseY > 150) {
-        page = 2
+        page = 5
       }
       if (mouseY < 325 && mouseY > 250) {
         page = 3
@@ -210,3 +256,5 @@ function level3() {
     bubbles[i].appear(); 
   }
 }
+
+/////////////////////////////////////////////////////
