@@ -6,6 +6,13 @@ var check;
 let bubbles = [];
 let score = 0;
 let level = 1;
+////////////////// ping pong
+var scores = 0;
+var levels = 1;
+xpos = 200
+ypos = 200
+dx = 5;
+dy = 3;
 
 
 ///////////////////////// circles
@@ -58,7 +65,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(600, 400);
+  createCanvas(400, 400);
   
   // circle
   for (let i = 0; i < 20; i++) {
@@ -73,39 +80,39 @@ function setup() {
 function draw() {
   background(220);
   fill(0, 255, 0);
-  rect(50, 50, 200, 75);
+  rect(0, 50, 200, 75);
   fill(255, 0, 255);
-  rect(50, 150, 200, 75);
+  rect(0, 150, 200, 75);
   fill(255, 0, 0);
-  rect(50, 250, 200, 75);
+  rect(0, 250, 200, 75);
   textSize(50)
   fill(255);
-  text('START', 70, 106);
-  text('EXIT', 94, 300);
+  text('START', 20, 106);
+  text('EXIT', 44, 300);
   textSize(26);
-  text('INSTRUCTIONS', 52, 200);
-  image(img, 275, 100, 300, 200);
+  text('INSTRUCTIONS', 5, 200);
+  image(img, 200, 100, 300, 200);
   
   if (page == 0) {
-    song.pause();
+    //song.pause();
   }
   
   if (page == 1){
     background(220);
     fill('pink');
-    rect(250, 50, 200, 75);
+    rect(200, 50, 200, 75);
     fill('blue');
-    rect(250, 150, 200, 75);
+    rect(200, 150, 200, 75);
     fill(255, 0, 0);
-    rect(250, 250, 200, 75);
+    rect(200, 250, 200, 75);
     textSize(50)
     fill(255);
-    text('circles', 270, 106);
-    text('trace', 280, 200);
-    text('pingpong', 250, 300);
+    text('circles', 220, 106);
+    text('trace', 230, 200);
+    text('pingpong', 200, 300);
     fill(0)
     textSize(20)
-    text('Right Click to return to MENU', 250, 30)
+    text('Right Click to return to MENU', 200, 30)
     if (mouseButton == RIGHT) {
       page = 0;
     }
@@ -114,12 +121,15 @@ function draw() {
   if (page == 2) {
     background(255, 0, 255)
     textSize(20)
-    text('Right Click to return to MENU', 250, 30)
-    textSize(20)
-    text('There are 3 games that you can play', 50, 150)
-    text('game 1 is pressing circles and you earn points', 50, 200)
-    text('game 2 is trace where you trace your mouse with the line', 50, 240)
-    text('game 3 is card flip where you have to match cards together', 50, 290)
+    text('Right Click to return to MENU', 100, 30)
+    textSize(15)
+    text('There are 3 games that you can play', 20, 70)
+    text('CIRCLES: you will use you mouse to click circles', 20, 100)
+    text('every correct click will earn you a point and check sound' , 20, 120)
+    text('TRACE: you will use your mouse to trace to destination', 20, 170)
+    text('without touching border, next level when complete',20,190)
+    text('PINGPONG: use your mouse to control pad, you earn', 20, 240)
+    text('score when you bounce the ball back', 20 , 260)
     if (mouseButton == RIGHT) {
       page = 0
     }
@@ -127,8 +137,8 @@ function draw() {
   
   if (page == 3) {
     background(255, 0, 0)
-    textSize(50)
-    text('COME AGAIN SOON!', 40, height / 2)
+    textSize(30)
+    text('COME AGAIN SOON!', 30, height / 2)
   }
   
   if (page == 4) {
@@ -138,12 +148,12 @@ function draw() {
     text("Score: " + score, 10, 40);
     text("Level: " +level, 10, 70)
     textSize(25);
-    song.play();
+    //song.play();
     check.setVolume(0.1);
-    song.setVolume(0.2);
+    //song.setVolume(0.2);
     textSize(20)
     fill('white')
-    text('Right Click to return to MENU', 200, 60)
+    text('Right Click to return to MENU', 125, 40)
     if (mouseButton == RIGHT) {
       page = 0;
     }
@@ -195,12 +205,56 @@ function draw() {
     text('Nicely done! Onto the next level.',10,30);
   }
   }
+  
+  if (page == 6) {
+    background('white');
+    rect(10,ypos,10,80);
+    rect(380,mouseY,10,80);
+    ellipse(xpos,ypos,20,20);
+      if (xpos>=width-20 || xpos==20)
+    {
+      dx = -dx
+    }
+  if (ypos>=height-10 || ypos==20)
+    {
+      dy = -dy
+    }
+  fill('black');
+  text('PONG GAME ',163,20);
+  text('Score:'+scores , 320,20);
+  text('Level:'+levels,20,20);
+  for (var i=0; i < 400; i+=20) {
+     line(200,i,200,i+10);
+  } 
+  xpos = xpos +dx;
+  ypos = ypos +dy;
+ 
+  
+  if(ypos==mouseY){
+    scores = scores+1;
+    
+  }
+  if(scores==5 && levels ==1){
+     levels = levels+1;
+    text('Level Successful' ,250,40);
+    scores=0;
+  }if(scores==10 && levels ==2){
+    text('Level Successful',320,40);
+    levels = levels+1;
+    scores=0;
+  }
+  if(scores==15 && levels ==3){
+    text('Level Successful',320,40);
+    levels = levels +1;
+    scores=0;
+  }
+  }
 }
 
 
 function mouseClicked() {
   if (page == 0) {
-    if (mouseX < 200 && mouseX > 50) {
+    if (mouseX < 200 && mouseX > 0) {
       if (mouseY < 125 && mouseY > 50) {
         page = 1
       }
@@ -221,7 +275,7 @@ function mouseClicked() {
         page = 5
       }
       if (mouseY < 325 && mouseY > 250) {
-        page = 3
+        page = 6
       }
     }
   }
