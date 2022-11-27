@@ -1,0 +1,54 @@
+var score = 0;
+var level = 1;
+xpos = 200
+ypos = 200
+dx = 5;
+dy = 3;
+function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  background('white');
+  rect(10,ypos,10,80);
+  rect(380,mouseY,10,80);
+  ellipse(xpos,ypos,20,20);
+  if (xpos>=width-20 || xpos==20)
+    {
+      dx = -dx
+    }
+  if (ypos>=height-10 || ypos==20)
+    {
+      dy = -dy
+    }
+  fill('black');
+  text('PONG GAME ',163,20);
+  text('Score:'+score , 320,20);
+  text('Level:'+level,20,20);
+  for (var i=0; i < 400; i+=20) {
+     line(200,i,200,i+10);
+  } 
+  xpos = xpos +dx;
+  ypos = ypos +dy;
+ 
+  
+  if(ypos==mouseY){
+    score = score+1;
+    
+  }
+  if(score==5 && level ==1){
+     level = level+1;
+    text('Level Successful' ,250,40);
+    score=0;
+  }if(score==10 && level ==2){
+    text('Level Successful',320,40);
+    level = level+1;
+    score=0;
+  }
+  if(score==15 && level ==3){
+    text('Level Successful',320,40);
+    level = level +1;
+    score=0;
+    
+  }
+}
