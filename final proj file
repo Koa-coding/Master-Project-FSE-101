@@ -13,6 +13,8 @@ xpos = 200
 ypos = 200
 dx = 5;
 dy = 3;
+///////////////trace
+var levelz = 0;
 
 
 ///////////////////////// circles
@@ -185,27 +187,44 @@ function draw() {
     circle(50,320,250);
     circle(200,320,250);
     circle(350,320,250);
-    textSize(20)
+    textSize(10)
     fill('black')
-    text('Right Click to return to MENU', 100, 60)
+    text('level is ' + levelz, 30, 50)
+    text('Right Click to return to MENU', 100, 50)
     if (mouseButton == RIGHT) {
       page = 0;
     }
     
-    if (mouseIsPressed) {
-    ellipse(mouseX,mouseY,5,5);
-  }
-  if (dist(50,50,mouseX,mouseY) < 125 ||dist(200,50,mouseX,mouseY) < 125|| dist(350,50,mouseX,mouseY) < 125 || dist(50,320,mouseX,mouseY) < 125 || dist(200,320,mouseX,mouseY) < 125 || dist(350,320,mouseX,mouseY) < 125) {
-    fill('black');
-    strokeWeight(2)
-    text('Looks like you traced outside of the lines!',10,30);
-  }
-  else {
-    fill('black');
-    strokeWeight(2)
-    text('Nicely done! Onto the next level.',10,30);
-  }
-  }
+//setting level1 if player is ready to start
+  
+    if (mouseX > 0 && mouseX < 10 && mouseY > 180 && mouseY < 190) {
+      levelz = 1;
+    }
+    
+    if (levelz == 1) {
+      if (dist(50,50,mouseX,mouseY) < 125 ||dist(200,50,mouseX,mouseY) < 125|| dist(350,50,mouseX,mouseY) < 125 || dist(50,320,mouseX,mouseY) < 125 || dist(200,320,mouseX,mouseY) < 125 || dist(350,320,mouseX,mouseY) < 125) {
+      clear();
+      fill('black');
+      text('Traced outside of the lines! Return to starting position and try again.',10,30);
+        setTimeout(level1, 1000);
+        //level--;
+      }
+      if (mouseX > 390 && mouseX < 400 && mouseY > 180 && mouseY < 200) {
+        fill('black');
+        text('Nicely done! Onto the next level.',10,30);
+        //noLoop();
+        //levelz++;
+      }
+      
+      text('Right Click to return to MENU', 100, 50)
+      if (mouseButton == RIGHT && levelz == 1) {
+        page = 0;
+      }
+      if (mouseButton == RIGHT && levelz == 2) {
+        page = 0;
+      }
+    }
+}
   
   if (page == 6) {
     strokeWeight(1)
@@ -288,7 +307,7 @@ function mouseClicked() {
 }
 
 
-//////////////////////////////////////////////////////////////
+/////////////////////////////////////////circ
     
 function mousePressed() {
   for (let i = 0; i < bubbles.length; i++) {
@@ -317,4 +336,101 @@ function level3() {
   }
 }
 
-/////////////////////////////////////////////////////
+///////////////////////////////////////////////////// trace
+
+function level1() {
+  clear();
+  createCanvas(400, 400);
+  background(220);
+  fill('black');
+  rect(0,180,10,10);
+  fill('black');
+  rect(390,180,10,10);
+  fill('white');
+  circle(50,50,250);
+  circle(200,50,250);
+  circle(350,50,250);
+  circle(50,320,250);
+  circle(200,320,250);
+  circle(350,320,250);
+  textSize(10)
+  fill('black')
+  text('level is ' + levelz, 30, 50)
+//setting level1 if player is ready to start
+  
+  if (mouseX > 0 && mouseX < 10 && mouseY > 180 && mouseY < 190) {
+    levelz = 1;
+  }
+  
+  if (levelz == 1) {
+    if (dist(50,50,mouseX,mouseY) < 125 ||dist(200,50,mouseX,mouseY) < 125|| dist(350,50,mouseX,mouseY) < 125 || dist(50,320,mouseX,mouseY) < 125 || dist(200,320,mouseX,mouseY) < 125 || dist(350,320,mouseX,mouseY) < 125) {
+    clear();
+    fill('black');
+    text('Traced outside of the lines! Return to starting position and try again.',10,30);
+      setTimeout(level1, 1000);
+      //level--;
+    }
+    
+    text('Right Click to return to MENU', 100, 50)
+    if (mouseButton == RIGHT && levelz == 1) {
+      page = 0;
+    }
+    if (mouseButton == RIGHT && levelz == 2) {
+      page = 0;
+    }
+    
+    if (mouseX > 390 && mouseX < 400 && mouseY > 180 && mouseY < 200) {
+      fill('black');
+      text('Nicely done! Onto the next level.',10,30);
+      //noLoop();
+      page = 0;
+      //levelz++;
+    }
+  }
+}
+
+//function of level2
+//  function level2() {
+//    clear();
+//    createCanvas(400, 400);
+//    background(220);
+//    fill('black');
+//    rect(0,180,10,10);
+//    fill('black');
+//    rect(390,180,10,10);
+//    fill('white');
+//    rect(15,0,50,170);
+//    rect(50,0,100,220);
+//    rect(15,270,200,200);
+//    rect(200,200,110,250);
+//    rect(150,0,200,150);
+//    rect(350,0,35,170);
+//    rect(310,210,75,210);
+//    textSize(10)
+//    fill('black')
+//    text('level is ' + levelz, 30, 50)
+//  
+//    if (mouseX > 0 && mouseX < 10 && mouseY > 180 && mouseY < 190) {
+//    levelz = 1;
+//     }
+//  
+//  if (levelz == 1) {
+//    if (mouseX > 15 && mouseX < 50 && mouseY > 0 && mouseY < 170 || mouseX > 50 && mouseX < //150 && mouseY > 0 && mouseY < 220 || mouseX > 15 && mouseX < 215 && mouseY > 270 && mouseY < //470 || mouseX > 200 && mouseX < 310 && mouseY > 200 && mouseY < 450 || mouseX > 150 && mouseX //< 350 && mouseY > 0 && mouseY < 150 || mouseX > 350 && mouseX < 385 && mouseY > 0 && mouseY < //170 || mouseX > 310 && mouseX < 385 && mouseY > 210 && mouseY < 420) {
+//      clear();
+//      fill('black');
+//      text('Traced outside of the lines! Return to starting position and try again.',10,30);
+//      setTimeout(level2,1000);
+//    }
+//    if (mouseX > 390 && mouseX < 400 && mouseY > 180 && mouseY < 200) {
+//      fill('black');
+//      text('Nicely done! Onto the next level.',10,30);
+//      levelz++;
+//    //setTimeout(level3,1000);
+//    }
+//    
+//    text('Right Click to return to MENU', 100, 50)
+//    if (mouseButton == RIGHT && levelz == 2) {
+//      page = 0;
+//    }
+//  }
+//}//
