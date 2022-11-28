@@ -142,6 +142,11 @@ function draw() {
     background(255, 0, 0)
     textSize(30)
     text('COME AGAIN SOON!', 30, height / 2)
+    textSize(20)
+    text('Right Click to return to MENU', 100, 30)
+    if (mouseButton == RIGHT) {
+      page = 0
+    }
   }
   
   if (page == 4) {
