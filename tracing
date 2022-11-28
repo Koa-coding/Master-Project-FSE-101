@@ -1,4 +1,6 @@
 var level = 0;
+var startedWithNoCollision = 0;
+
 function setup() {
   createCanvas(400, 400);
 }
@@ -16,34 +18,35 @@ function draw() {
   circle(50,320,250);
   circle(200,320,250);
   circle(350,320,250);
-//setting level1 if player is ready to start
   
   if (mouseX > 0 && mouseX < 10 && mouseY > 180 && mouseY < 190) {
     level = 1;
   }
+
   
+   // startedWithNoCollision keeps track of if the level starts from the starting position with no collision.
+    if(startedWithNoCollision == 0) {
+        startWithNoCollision();
+    }
+ 
   if (level == 1) {
     if (dist(50,50,mouseX,mouseY) < 125 ||dist(200,50,mouseX,mouseY) < 125|| dist(350,50,mouseX,mouseY) < 125 || dist(50,320,mouseX,mouseY) < 125 || dist(200,320,mouseX,mouseY) < 125 || dist(350,320,mouseX,mouseY) < 125) {
-    clear();
-    fill('black');
-    text('Traced outside of the lines! Return to starting position and try again.',10,30);
-      setTimeout(level1, 1000);
-      //level--;
+     clear();
+     fill('black');
+     text('Traced outside of the lines! Return to starting position and try again.',10,30);
+     startWithNoCollision();
+     setTimeout(level1, 1000);
+      
     }
-    if (mouseX > 390 && mouseX < 400 && mouseY > 180 && mouseY < 200) {
+    if (mouseX > 390 && mouseX < 400 && mouseY > 180 && mouseY < 200 && startedWithNoCollision == 1) {
       fill('black');
       text('Nicely done! Onto the next level.',10,30);
       noLoop();
       level++;
   }
   }
-  
-//  
-  //if (level == 1) {
-    //setTimeout(level1,1000);
-    /* note for morning, for first playing of level 1, create level 1 outside of level1 function (in draw()). then for subsequent playing of level1, use redoLevel1 function (to be made). not needed for levels 2 and 3 because they will require clear canvas and creating new shapes every time anyway.*/
-  //}
-    
+ 
+   
   function level1() {
   clear();
   createCanvas(400, 400);
@@ -60,33 +63,44 @@ function draw() {
   circle(200,320,250);
   circle(350,320,250);
 //setting level1 if player is ready to start
-  
-  if (mouseX > 0 && mouseX < 10 && mouseY > 180 && mouseY < 190) {
-    level = 1;
-  }
-  
+ 
+// triggers startWithNoCollision function
+    if(startedWithNoCollision == 0) {
+        startWithNoCollision();
+    }
+ 
   if (level == 1) {
     if (dist(50,50,mouseX,mouseY) < 125 ||dist(200,50,mouseX,mouseY) < 125|| dist(350,50,mouseX,mouseY) < 125 || dist(50,320,mouseX,mouseY) < 125 || dist(200,320,mouseX,mouseY) < 125 || dist(350,320,mouseX,mouseY) < 125) {
-    clear();
-    fill('black');
-    text('Traced outside of the lines! Return to starting position and try again.',10,30);
-      setTimeout(level1, 1000);
-      //level--;
+     clear();
+     fill('black');
+     text('Traced outside of the lines! Return to starting position and try again.',10,30);
+     startWithNoCollision();
+     setTimeout(level1, 1000);
+      
     }
     if (mouseX > 390 && mouseX < 400 && mouseY > 180 && mouseY < 200) {
       fill('black');
       text('Nicely done! Onto the next level.',10,30);
-      noLoop();
+      resetNoCollisionStart();
       level++;
-  }
+      setTimeout(level2,2000);
+  }else
+    {
+        setTimeout(level1,1000);
+    }
   }
 }
-  
+ 
 //setting up level2 for playing
   if (level == 2) {
-    setTimeout(level2,1000);
+    if(startedWithNoCollision == 1) {
+        resetNoCollisionStart();
+      setTimeout(level2, 1000);
+    }
+    
+    
   }
-  
+ 
 //function of level2
   function level2() {
     clear();
@@ -104,31 +118,45 @@ function draw() {
     rect(150,0,200,150);
     rect(350,0,35,170);
     rect(310,210,75,210);
-  
-    if (mouseX > 0 && mouseX < 10 && mouseY > 180 && mouseY < 190) {
-    level = 1;
-     }
-  
-  if (level == 1) {
-    if (mouseX > 15 && mouseX < 50 && mouseY > 0 && mouseY < 170 || mouseX > 50 && mouseX < 150 && mouseY > 0 && mouseY < 220 || mouseX > 15 && mouseX < 215 && mouseY > 270 && mouseY < 470 || mouseX > 200 && mouseX < 310 && mouseY > 200 && mouseY < 450 || mouseX > 150 && mouseX < 350 && mouseY > 0 && mouseY < 150 || mouseX > 350 && mouseX < 385 && mouseY > 0 && mouseY < 170 || mouseX > 310 && mouseX < 385 && mouseY > 210 && mouseY < 420) {
+   
+    fill('black');
+    
+    if(startedWithNoCollision == 0) {
+        startWithNoCollision();
+    }
+    
+   
+  if (level == 2) {
+   
+    if ((mouseX > 9 && mouseX < 50 && (mouseY < 169 || mouseY > 267)) || (mouseX > 49  && mouseX < 150 && (mouseY > 268 || mouseY < 219)) || (mouseX > 149 && mouseX < 199  && (mouseY > 268 || mouseY < 149)) || (mouseX > 198 && mouseX < 309  && (mouseY > 199 || mouseY < 149)) || (mouseX > 308 && mouseX < 350  && (mouseY > 209 || mouseY < 149)) || (mouseX > 349 && mouseX < 390  && (mouseY > 209 || mouseY < 178)))
+    {
       clear();
       fill('black');
       text('Traced outside of the lines! Return to starting position and try again.',10,30);
+      startWithNoCollision();
       setTimeout(level2,1000);
     }
-    if (mouseX > 390 && mouseX < 400 && mouseY > 180 && mouseY < 200) {
+      
+    if(mouseX > 389 &&  mouseX < 400 && (mouseY > 180 && mouseY <191) 
+      && startedWithNoCollision == 1){
       fill('black');
-      text('Nicely done! Onto the next level.',10,30);
-      level = level + 2;
-    //setTimeout(level3,1000);
+      text('Nicely done! Onto the next level.',40,30);
+      level = level + 1;
+      resetNoCollisionStart();
+      setTimeout(level3,1000);
+  }else
+    {
+        setTimeout(level2,1000);
+    }
   }
-  }
-}
-  
+ 
+
+ 
   if (level == 3) {
     setTimeout(level3, 1000);
   }
-  
+  }
+ 
   function level3() {
     clear();
     createCanvas(400, 400);
@@ -148,23 +176,45 @@ function draw() {
     circle(350,250,100);
     circle(350,100,150);
     circle(0,100,100);
-    if (mouseX > 0 && mouseX < 10 && mouseY > 180 && mouseY < 190) {
-       level = 1;
-     }
-    if (level == 1) {
-    if (dist(0,100,mouseX,mouseY) < 50 || mouseX > 0 && mouseX < 100 && mouseY > 0 && mouseY < 100 || dist(100,180,mouseX,mouseY) < 50 || mouseX > 0 && mouseX < 100 && mouseY > 210 && mouseY < 310 || mouseX > 200 && mouseX < 320 && mouseY > 200 && mouseY < 320 || dist(150,250,mouseX,mouseY) < 50 || mouseX > 200 && mouseX < 300 && mouseY > 0 && mouseY < 150 || dist(350,250,mouseX,mouseY) < 50 || dist(350,100,mouseX,mouseY) < 75 || dist(150,50,mouseX,mouseY) < 50) {
+    
+    fill('black');
+ 
+    if(startedWithNoCollision == 0) {
+        startWithNoCollision();
+    } 
+    
+    if (level == 3 ) {
+    if (dist(0,100,mouseX,mouseY) < 50 || mouseX > 0 && mouseX < 100 && mouseY > 0 && mouseY < 100 || dist(100,180,mouseX,mouseY) < 50 || mouseX > 0 && mouseX < 100 && mouseY > 210 && mouseY < 310 || mouseX > 200 && mouseX < 320 && mouseY > 200 && mouseY < 320 || dist(150,250,mouseX,mouseY) < 50 || mouseX > 200 && mouseX < 300 && mouseY > 0 && mouseY < 150 || dist(350,250,mouseX,mouseY) < 50 || dist(350,100,mouseX,mouseY) < 75 || dist(150,50,mouseX,mouseY) < 50)  {
       clear();
       fill('black');
       text('Traced outside of the lines! Return to starting position and try again.',10,30);
+      startWithNoCollision();
       setTimeout(level3,1000);
-      
+     
   }
-    if (mouseX > 390 && mouseX < 400 && mouseY > 180 && mouseY < 200) {
+    if (mouseX > 390 && mouseX < 400 && mouseY > 180 && mouseY < 200 && startedWithNoCollision == 1) {
       fill('black');
       text('Nicely done! You have won the game!',10,30);
       noLoop();
-      //code here for returning to main gui
+  }else{
+     setTimeout(level3,1000);
+    
   }
  }
-}  
+}
+  //set startedWithNoCollision to 1 if the mouse is in the starting position
+  function startWithNoCollision(){
+     if (mouseX > 0 && mouseX < 10 && mouseY > 179 && mouseY < 191) {
+      startedWithNoCollision = 1;
+      //text('', 10, 42);
+     }else{
+       startedWithNoCollision = 0;
+       fill('black');
+       text('To begin attempting this level your mouse must be in the starting position.', 10, 42);
+     }
+  }
+//"starts over" and will only go to 1 if starting position is reached
+  function resetNoCollisionStart(){
+    startedWithNoCollision = 0;
+  }
 }
